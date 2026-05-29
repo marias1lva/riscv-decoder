@@ -1,3 +1,94 @@
+# RISC-V Instruction Decoder
+
+## About the Project
+This program processes an **instruction memory file (ROM)** containing **RISC-V instructions** in **hexadecimal** or **binary** format and performs complete **classification** of instructions according to their format: **R-type, I-type, S-type, B-type, U-type, and J-type**. To identify the instruction type, the software reads the **7 least significant bits** (bits 0–6) and compares the opcode against the values specified in the RISC-V practical guide (page 49). After identifying the format, each instruction is **split into its corresponding fields** — such as destination registers (`rd`), source registers (`rs1`, `rs2`), function codes (`funct3`, `funct7`), and immediates with sign extension applied when necessary. This approach allows both direct instructions and pseudo-instructions used in the Computer Architecture I course to be correctly decoded and displayed in detail.
+
+The main goal is to apply concepts of **binary representation**, **string manipulation**, and **instruction decoding**, enabling users to inspect the internal components of instructions in a didactic way.
+
+## Features
+- Reading 32-bit hexadecimal or binary instructions from a text file.
+- Converting instructions to a 32-bit binary representation.
+- Opcode identification and instruction format determination (R, I, S, B, U, or J).
+- Extraction of instruction fields:
+  - Registers (`rd`, `rs1`, `rs2`)
+  - Immediates (with sign extension when necessary)
+  - Function codes (`funct3` and `funct7`)
+- Detailed display of instructions and their components in the terminal.
+
+## File Structure
+- `main.cpp` – Core program logic: file reading, instruction conversion, decoding, and field display.
+
+## How It Works
+1. **Instruction Input:** The program reads instructions from a text file (`instrucoesHexa.txt` or `instrucoesBinario.txt`).
+2. **Binary Conversion:** Each line is converted to a 32-bit binary representation.
+3. **Opcode Extraction:** The opcode is obtained from the 7 least significant bits of the instruction.
+4. **Instruction Decoding:** Based on the opcode, the program identifies the instruction format and extracts its fields.
+5. **Field Display:** Registers, function codes, and immediates are printed to the terminal for easy analysis.
+
+## Example
+
+Suppose `instrucoesHexa.txt` contains:
+```bash
+0x00a58533
+0x00500513
+0x00b50663
+```
+Terminal output:
+```bash
+Instruction: 0x00a58533
+Format: R
+rd = 10
+rs1 = 11
+rs2 = 10
+funct3 = 000
+funct7 = 0000000
+----------------------------------
+Instruction: 0x00500513
+Format: I
+rd = 10
+rs1 = 0
+funct3 = 000
+imm = 5
+----------------------------------
+Instruction: 0x00b50663
+Format: B
+rs1 = 10
+rs2 = 11
+funct3 = 000
+imm = 12
+----------------------------------
+```
+
+## Tech Stack
+- Language: **C++**
+- Structures used:
+  - **Strings and bitset:** For bit manipulation and hexadecimal/binary conversion.
+  - **Helper functions:** For field extraction, conversion, and immediate sign extension.
+
+## How to Use
+1. Clone the repository:
+```bash
+git clone https://github.com/marias1lva/riscv-decoder.git
+cd riscv-decoder
+```
+2. Compile using a C++ compiler such as g++:
+```bash
+g++ -o riscVDecoder main.cpp
+```
+3. Run the program:
+```bash
+./riscVDecoder
+```
+4. Make sure an instruction file (`instrucoesHexa.txt` or `instrucoesBinario.txt`) is present in the same directory so the program can read and decode it.
+
+## References
+- **RISC-V Practical Guide** – Instruction specifications and opcodes.
+- **RISC-V Instruction Set Manual - Volume I: User-Level ISA** – Official RISC-V instruction set documentation.
+- **Bit Manipulation in C++** – Reference for bitset operations and bit manipulation in C++.
+- **C++ Reference – stoi, stoul, and string manipulation** – For converting binary and hexadecimal strings to integers.
+
+----
+
 # Decodificador de Instruções RISC-V
 
 ## Sobre o Projeto
